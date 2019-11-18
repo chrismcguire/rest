@@ -1,3 +1,6 @@
+from builtins import str
+from builtins import map
+from builtins import object
 import json
 
 from collections import defaultdict
@@ -75,7 +78,7 @@ class XmlEncoding(object):
     else:
       namespace = self.namespace
     root = ElementTree.Element(namespace)
-    for k, vs in dct.items():
+    for k, vs in list(dct.items()):
       if not hasattr(vs, '__iter__'):
         vs = [vs]
 
@@ -89,7 +92,7 @@ class XmlEncoding(object):
   def _decode_str(self, string):
     e = ElementTree.XML(string)
     d = dict()
-    for values in self.etree_to_dict(e).values():
+    for values in list(self.etree_to_dict(e).values()):
       d.update(values)
     return d
 
@@ -99,15 +102,15 @@ class XmlEncoding(object):
     if children:
       dd = defaultdict(list)
       for dc in map(self.etree_to_dict, children):
-        for k, v in dc.iteritems():
+        for k, v in dc.items():
           dd[k].append(v)
 
       values = {}
-      for k, vs in dd.iteritems():
+      for k, vs in dd.items():
         values[k] = vs[0] if len(vs) == 1 else vs
       d = {t.tag: values}
     if t.attrib:
-      d[t.tag].update(('@' + k, v) for k, v in t.attrib.iteritems())
+      d[t.tag].update(('@' + k, v) for k, v in t.attrib.items())
     if t.text:
       text = t.text.strip()
       if children or t.attrib:

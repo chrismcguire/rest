@@ -1,3 +1,6 @@
+from builtins import str
+from past.builtins import basestring
+from builtins import object
 from datetime import datetime
 from decimal import Decimal
 from locale import atof
@@ -125,8 +128,8 @@ class String(Field):
 
   def coerce(self, value):
     if self.trim_to:
-      return unicode(value)[:self.trim_to]
-    return unicode(value)
+      return str(value)[:self.trim_to]
+    return str(value)
 
 
 class NoneString(String):

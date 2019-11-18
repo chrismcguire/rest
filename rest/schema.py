@@ -1,17 +1,19 @@
 
+from builtins import str
+from builtins import object
 class Schema(object):
   @classmethod
   def combined_errors(self, *args):
     errors = []
     for schema in args:
-      errors.extend(schema._errors.items())
+      errors.extend(list(schema._errors.items()))
     return dict(errors)
 
   def __init__(self, **kwargs):
     self._fields = self._get_fields()
     self._errors = {}
 
-    for name, field in self._fields.items():
+    for name, field in list(self._fields.items()):
       if name in kwargs:
         field.set(kwargs.pop(name))
       else:
@@ -35,7 +37,7 @@ class Schema(object):
 
     # First, set the values on the field. If anything goes wrong, it'll return
     # a list of errors
-    for name, value in data.items():
+    for name, value in list(data.items()):
       if name not in self._fields:
         continue
       try:
@@ -45,13 +47,13 @@ class Schema(object):
       add_errors(name, errs)
 
     # Check to see if we need to default to defalut values
-    for name, field in self._fields.items():
+    for name, field in list(self._fields.items()):
       if not field.serialize:
         continue
       field.default()
 
     # Then, now the everything's been set, run all the field validators.
-    for name, field in self._fields.items():
+    for name, field in list(self._fields.items()):
       if not field.serialize:
         continue
       errs = field.validate()
@@ -72,7 +74,7 @@ class Schema(object):
 
   def _get(self):
     rep = {}
-    for name, field in self._fields.items():
+    for name, field in list(self._fields.items()):
       if field.serialize:
         name = getattr(field, 'name', name)
         rep[name] = field.get_simplified()

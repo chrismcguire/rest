@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-from StringIO import StringIO
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from io import StringIO
 
 from flask import Flask
 from flask.ext.testing import TestCase
@@ -257,7 +260,7 @@ class TestCSVUpload(TestCase):
       '''"slow horses",grass food,33'''
 
     o = {
-      'csv': unicode(data)
+      'csv': str(data)
     }
 
     fieldnames = ('name','feed','pounds',)
@@ -268,7 +271,7 @@ class TestCSVUpload(TestCase):
 
       for row, row_number, errors in rows:
         seen_rows.append(row)
-        for k in row.keys():
+        for k in list(row.keys()):
           seen_keys.add(k)
 
       self.assertEqual(3, len(seen_keys))
