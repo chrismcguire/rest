@@ -10,37 +10,37 @@ from functools import wraps
 from io import StringIO
 from werkzeug.wrappers import BaseResponse
 
-from schema import Schema
-from model import Model
+from .schema import Schema
+from .model import Model
 
-from fields import Bool
-from fields import DateTime
-from fields import Dict
-from fields import Dollars
-from fields import Email
-from fields import Float
-from fields import Int
-from fields import List
-from fields import NoneInt
-from fields import NoneString
-from fields import ReadOnly
-from fields import String
-from fields import StringBool
-from fields import TruthyOnlyList
-from fields import URL
-from fields import WriteOnce
-from fields import WriteOnly
+from .fields import Bool
+from .fields import DateTime
+from .fields import Dict
+from .fields import Dollars
+from .fields import Email
+from .fields import Float
+from .fields import Int
+from .fields import List
+from .fields import NoneInt
+from .fields import NoneString
+from .fields import ReadOnly
+from .fields import String
+from .fields import StringBool
+from .fields import TruthyOnlyList
+from .fields import URL
+from .fields import WriteOnce
+from .fields import WriteOnly
 
-from validators import email
-from validators import length
-from validators import multiple_choice
-from validators import nonempty
-from validators import number_range
-from validators import regex
-from validators import required
-from validators import url
+from .validators import email
+from .validators import length
+from .validators import multiple_choice
+from .validators import nonempty
+from .validators import number_range
+from .validators import regex
+from .validators import required
+from .validators import url
 
-from encoding import encoder
+from .encoding import encoder
 
 
 class CsvValidationError(ValueError):
